@@ -23,7 +23,7 @@ def check_headers(headers):
     
     valid_keys = ['End Date', 'Description',
     'All Day Event', 'Start Time', 'Private',
-    'End Time', 'Location', 'Start Date', 'Subject']
+    'End Time', 'Location', 'Start Date', 'Lead Counselor']
 
     if (set(headers) != set(valid_keys)
     or len(headers) != len(valid_keys)):
@@ -97,7 +97,7 @@ def convert(reader_builder):
     # Code found here: http://bit.ly/Z4Pg4h
 
     try:
-        reader_builder[:] = [d for d in reader_builder if d.get('Subject') != '']
+        reader_builder[:] = [d for d in reader_builder if d.get('Lead Counselor') != '']
 
         headers = reader_builder[0].keys()
         check_headers(headers)
@@ -120,8 +120,8 @@ def convert(reader_builder):
         for row in reader:
             logger.debug('Event {} started, contents:\n{}'.format(rownum, row))
             event = Event()
-            event.add('summary', row['Subject'])
-            logger.info('Event {} initialiazed, subject: {}'.format(rownum, row['Subject']))
+            event.add('summary', row['Lead Counselor'])
+            logger.info('Event {} initialiazed, subject: {}'.format(rownum, row['Lead Counselor']))
 
             # If marked as an "all day event," ignore times.
             # If start and end date are the same
